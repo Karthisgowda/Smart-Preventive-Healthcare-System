@@ -8,6 +8,42 @@ function sendJson(response, statusCode, payload) {
   response.end(JSON.stringify(payload));
 }
 
+function buildLocalRecommendation(question, profile, plan) {
+  const tips = [];
+
+  if (profile.exercise < 150) {
+    tips.push("Increase weekly exercise gradually toward 150 minutes of moderate activity.");
+  }
+  if (profile.sleep < 7) {
+    tips.push("Keep a regular sleep schedule and aim for at least 7 hours of sleep.");
+  }
+  if (profile.systolic >= 130) {
+    tips.push("Track blood pressure regularly and reduce salt-heavy packaged foods.");
+  }
+  if (profile.glucose >= 100) {
+    tips.push("Prefer high-fiber meals and discuss glucose screening with a clinician.");
+  }
+  if (profile.smoking) {
+    tips.push("Create a tobacco quit plan and ask a healthcare professional about support options.");
+  }
+  if (profile.familyHistory) {
+    tips.push("Keep routine preventive checkups active because family history can increase risk.");
+  }
+
+  if (tips.length === 0) {
+    tips.push("Maintain your current healthy habits and continue routine preventive checkups.");
+  }
+
+  return [
+    `Prediction summary: ${plan.level || "Assessment completed"} with a prevention score of ${plan.score || "--"}/100.`,
+    `You asked: ${question}`,
+    "Recommended next steps:",
+    ...tips.map((tip) => `- ${tip}`),
+    "- Add appointment reminders for annual checkup, dental visit, eye checkup, and any doctor-advised screening.",
+    "This is educational guidance only. For personal medical decisions, consult a qualified clinician.",
+  ].join("\n");
+}
+
 module.exports = async function handler(request, response) {
   if (request.method !== "POST") {
     sendJson(response, 405, { error: "Method not allowed" });
@@ -15,10 +51,6 @@ module.exports = async function handler(request, response) {
   }
 
   const apiKey = process.env.GROQ_API_KEY;
-  if (!apiKey) {
-    sendJson(response, 500, { error: "AI coach is not configured yet." });
-    return;
-  }
 
   try {
     const chunks = [];
@@ -33,6 +65,14 @@ module.exports = async function handler(request, response) {
 
     if (!question) {
       sendJson(response, 400, { error: "Question is required." });
+      return;
+    }
+
+    if (!apiKey) {
+      sendJson(response, 200, {
+        answer: buildLocalRecommendation(question, profile, plan),
+        mode: "local",
+      });
       return;
     }
 
