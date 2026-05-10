@@ -12,13 +12,13 @@
         <p class="eyebrow">Smart Preventive Healthcare System</p>
         <h1>Personal prevention dashboard</h1>
       </div>
-      <button id="themeToggle" class="icon-button" type="button" aria-label="Toggle color theme" title="Toggle theme">◐</button>
+      <button id="themeToggle" class="icon-button" type="button" aria-label="Toggle color theme" title="Toggle theme">T</button>
     </header>
 
     <main>
       <section class="hero">
         <div class="hero-copy">
-          <p class="status-pill">Early risk insight • Habit planning • Local privacy</p>
+          <p class="status-pill">Early risk insight - Habit planning - AI coach</p>
           <h2>Catch health risks before they become emergencies.</h2>
           <p>
             Track vitals, estimate lifestyle risk, generate a preventive care plan,
@@ -169,6 +169,33 @@
         <p id="triageOutput" class="triage-output">
           Select a symptom for general guidance. This tool is informational and does not replace a doctor.
         </p>
+      </section>
+
+      <section class="panel coach-panel">
+        <div class="section-heading">
+          <p class="eyebrow">AI coach</p>
+          <h2>Preventive care assistant</h2>
+        </div>
+        <div class="coach-layout">
+          <div>
+            <p class="coach-copy">
+              Ask for a simple action plan based on your current assessment. The assistant gives educational guidance,
+              not a diagnosis.
+            </p>
+            <div class="quick-prompts" aria-label="Quick AI prompts">
+              <button data-prompt="Give me a 7 day preventive health plan based on my current score." type="button">7 day plan</button>
+              <button data-prompt="Which habits should I improve first and why?" type="button">Priority habits</button>
+              <button data-prompt="Create a screening and checkup checklist for my profile." type="button">Screening list</button>
+            </div>
+          </div>
+          <form id="coachForm" class="coach-form">
+            <textarea name="question" rows="4" placeholder="Ask the AI coach about prevention, habits, screening, or next steps." required></textarea>
+            <button class="primary-action" type="submit">Ask AI coach</button>
+          </form>
+        </div>
+        <div id="coachOutput" class="coach-output">
+          Your AI guidance will appear here after you ask a question.
+        </div>
       </section>
     </main>
 

@@ -425,6 +425,74 @@ legend {
   line-height: 1.55;
 }
 
+.coach-panel {
+  margin-top: 22px;
+}
+
+.coach-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(320px, 1.15fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.coach-copy {
+  margin: 0 0 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.quick-prompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.quick-prompts button {
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0 12px;
+}
+
+.coach-form {
+  display: grid;
+  gap: 10px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 116px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  padding: 12px;
+  resize: vertical;
+  font: inherit;
+}
+
+.coach-output {
+  min-height: 120px;
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--surface-strong);
+  line-height: 1.6;
+}
+
+.coach-output p {
+  margin: 0 0 10px;
+}
+
+.coach-output p:last-child {
+  margin-bottom: 0;
+}
+
 footer {
   padding: 28px 0 38px;
   color: var(--muted);
@@ -445,7 +513,8 @@ footer {
   .form-grid,
   .inline-form,
   .triage-grid,
-  .score-block {
+  .score-block,
+  .coach-layout {
     grid-template-columns: 1fr;
   }
 

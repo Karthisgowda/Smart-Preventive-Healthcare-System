@@ -9,8 +9,17 @@ A lightweight preventive healthcare dashboard that helps users track basic vital
 - Local vitals log stored in the browser
 - Reminder center for checkups, vaccines, medication, and screening tasks
 - Symptom triage helper for general guidance
+- AI preventive care coach powered by a protected serverless API route
 - Downloadable preventive care checklist
 - Responsive light and dark interface
+
+## Environment variables
+
+The AI coach expects this environment variable in production:
+
+```bash
+GROQ_API_KEY=your_groq_key
+```
 
 ## Run locally
 

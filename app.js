@@ -45,6 +45,8 @@ const recordList = document.querySelector("#recordList");
 const reminderList = document.querySelector("#reminderList");
 const downloadPlan = document.querySelector("#downloadPlan");
 const themeToggle = document.querySelector("#themeToggle");
+const coachForm = document.querySelector("#coachForm");
+const coachOutput = document.querySelector("#coachOutput");
 
 const load = (key, fallback) => JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback));
 const save = (key, value) => localStorage.setItem(key, JSON.stringify(value));
@@ -154,6 +156,17 @@ function renderPlan(plan) {
   recommendationList.innerHTML = plan.factors.map((item) => `<li>${item}</li>`).join("");
 }
 
+function formatCoachAnswer(answer) {
+  return answer
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `<p>${line.replace(/^[-*]\s*/, "")}</p>`)
+    .join("");
+}
+
 function renderRecords() {
   const records = load(STORAGE_KEYS.records, []);
   recordList.innerHTML = records.length
@@ -162,7 +175,7 @@ function renderRecords() {
           (record, index) => `
           <div class="stack-item">
             <span><strong>${record.label}</strong><br>${record.value}<br><small>${record.date}</small></span>
-            <button data-delete-record="${index}" type="button" aria-label="Delete ${record.label}">×</button>
+            <button data-delete-record="${index}" type="button" aria-label="Delete ${record.label}">x</button>
           </div>`
         )
         .join("")
@@ -179,7 +192,7 @@ function renderReminders() {
           (reminder, index) => `
           <div class="stack-item">
             <span><strong>${reminder.task}</strong><br>${new Date(reminder.date).toDateString()}</span>
-            <button data-delete-reminder="${index}" type="button" aria-label="Delete ${reminder.task}">×</button>
+            <button data-delete-reminder="${index}" type="button" aria-label="Delete ${reminder.task}">x</button>
           </div>`
         )
         .join("")
@@ -268,6 +281,43 @@ downloadPlan.addEventListener("click", () => {
 themeToggle.addEventListener("click", () => {
   document.body.classList.toggle("dark");
   save(STORAGE_KEYS.theme, document.body.classList.contains("dark") ? "dark" : "light");
+});
+
+document.querySelectorAll("[data-prompt]").forEach((button) => {
+  button.addEventListener("click", () => {
+    coachForm.elements.question.value = button.dataset.prompt;
+    coachForm.requestSubmit();
+  });
+});
+
+coachForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const question = new FormData(coachForm).get("question").trim();
+  const profile = getFormData();
+  const plan = calculateRisk(profile);
+  save(STORAGE_KEYS.plan, plan);
+  renderPlan(plan);
+
+  coachOutput.textContent = "Thinking through your preventive plan...";
+  coachForm.querySelector("button").disabled = true;
+
+  try {
+    const response = await fetch("/api/coach", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question, profile, plan }),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.error || "AI coach unavailable.");
+    }
+    coachOutput.innerHTML = formatCoachAnswer(data.answer);
+  } catch (error) {
+    coachOutput.textContent =
+      "The AI coach could not respond right now. Please try again after deployment settings are ready.";
+  } finally {
+    coachForm.querySelector("button").disabled = false;
+  }
 });
 
 if (load(STORAGE_KEYS.theme, "light") === "dark") {
