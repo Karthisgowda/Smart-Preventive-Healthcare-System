@@ -18,11 +18,11 @@
     <main>
       <section class="hero">
         <div class="hero-copy">
-          <p class="status-pill">Early risk insight - Habit planning - AI coach</p>
+          <p class="status-pill">Manual data entry - AI prediction - Health recommendations - Appointment reminders</p>
           <h2>Catch health risks before they become emergencies.</h2>
           <p>
-            Track vitals, estimate lifestyle risk, generate a preventive care plan,
-            and keep screening reminders in one lightweight web app.
+            Enter health data manually, get AI-assisted prediction insights, receive
+            personalized health recommendations, and manage appointment reminders.
           </p>
           <div class="hero-actions">
             <a href="#assessment" class="primary-action">Start assessment</a>
@@ -40,23 +40,23 @@
       <section class="metrics-strip" aria-label="Dashboard summary">
         <article>
           <span id="metricRisk">0</span>
-          <p>Risk factors</p>
+          <p>AI prediction factors</p>
         </article>
         <article>
           <span id="metricHabits">0</span>
-          <p>Healthy habits</p>
+          <p>Recommendation signals</p>
         </article>
         <article>
           <span id="metricReminders">0</span>
-          <p>Active reminders</p>
+          <p>Appointment reminders</p>
         </article>
       </section>
 
       <section id="assessment" class="workspace-grid">
         <form id="assessmentForm" class="panel">
           <div class="section-heading">
-            <p class="eyebrow">Assessment</p>
-            <h2>Risk profile</h2>
+            <p class="eyebrow">Manual data entry</p>
+            <h2>Patient health data</h2>
           </div>
 
           <div class="form-grid">
@@ -105,13 +105,13 @@
             <label class="check-row"><input name="sedentary" type="checkbox" /> Sitting more than 8 hours per day</label>
           </fieldset>
 
-          <button class="primary-action full-width" type="submit">Generate prevention plan</button>
+          <button class="primary-action full-width" type="submit">Run AI prediction</button>
         </form>
 
         <section class="panel results-panel" aria-live="polite">
           <div class="section-heading">
-            <p class="eyebrow">Insights</p>
-            <h2>Care recommendations</h2>
+            <p class="eyebrow">AI prediction</p>
+            <h2>Risk prediction result</h2>
           </div>
           <div class="score-block">
             <div class="score-ring" id="scoreRing">
@@ -123,14 +123,14 @@
             </div>
           </div>
           <ul id="recommendations" class="recommendation-list"></ul>
-          <button id="downloadPlan" class="secondary-action full-width" type="button">Download checklist</button>
+          <button id="downloadPlan" class="secondary-action full-width" type="button">Download health recommendation plan</button>
         </section>
       </section>
 
       <section id="records" class="workspace-grid">
         <section class="panel">
           <div class="section-heading">
-            <p class="eyebrow">Tracking</p>
+            <p class="eyebrow">Manual data entry</p>
             <h2>Vitals log</h2>
           </div>
           <form id="recordForm" class="inline-form">
@@ -143,11 +143,11 @@
 
         <section class="panel">
           <div class="section-heading">
-            <p class="eyebrow">Prevention</p>
+            <p class="eyebrow">Appointment reminders</p>
             <h2>Reminder center</h2>
           </div>
           <form id="reminderForm" class="inline-form">
-            <input name="task" placeholder="Task, e.g. Annual checkup" required />
+            <input name="task" placeholder="Appointment, e.g. Doctor checkup" required />
             <input name="date" type="date" required />
             <button class="primary-action" type="submit">Add</button>
           </form>
@@ -173,24 +173,24 @@
 
       <section class="panel coach-panel">
         <div class="section-heading">
-          <p class="eyebrow">AI coach</p>
-          <h2>Preventive care assistant</h2>
+          <p class="eyebrow">Health recommendation system</p>
+          <h2>AI health assistant</h2>
         </div>
         <div class="coach-layout">
           <div>
             <p class="coach-copy">
-              Ask for a simple action plan based on your current assessment. The assistant gives educational guidance,
-              not a diagnosis.
+              Ask for a simple recommendation plan based on your manual data entry and AI prediction result.
+              The assistant gives educational guidance, not a diagnosis.
             </p>
             <div class="quick-prompts" aria-label="Quick AI prompts">
-              <button data-prompt="Give me a 7 day preventive health plan based on my current score." type="button">7 day plan</button>
-              <button data-prompt="Which habits should I improve first and why?" type="button">Priority habits</button>
-              <button data-prompt="Create a screening and checkup checklist for my profile." type="button">Screening list</button>
+              <button data-prompt="Give me a 7 day health recommendation plan based on my current prediction score." type="button">7 day plan</button>
+              <button data-prompt="Which health habits should I improve first and why?" type="button">Priority habits</button>
+              <button data-prompt="Create an appointment and screening reminder checklist for my profile." type="button">Appointment list</button>
             </div>
           </div>
           <form id="coachForm" class="coach-form">
-            <textarea name="question" rows="4" placeholder="Ask the AI coach about prevention, habits, screening, or next steps." required></textarea>
-            <button class="primary-action" type="submit">Ask AI coach</button>
+            <textarea name="question" rows="4" placeholder="Ask for health recommendations, AI prediction explanation, or appointment planning." required></textarea>
+            <button class="primary-action" type="submit">Get recommendation</button>
           </form>
         </div>
         <div id="coachOutput" class="coach-output">

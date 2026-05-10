@@ -4,14 +4,10 @@ A lightweight preventive healthcare dashboard that helps users track basic vital
 
 ## Features
 
-- Prevention score from BMI, blood pressure, glucose, sleep, exercise, stress, and lifestyle risk factors
-- Personalized recommendations for healthier habits and screening follow-up
-- Local vitals log stored in the browser
-- Reminder center for checkups, vaccines, medication, and screening tasks
-- Symptom triage helper for general guidance
-- AI preventive care coach powered by a protected serverless API route
-- Downloadable preventive care checklist
-- Responsive light and dark interface
+- Manual data entry for age, height, weight, blood pressure, glucose, sleep, exercise, stress, and lifestyle risks
+- AI prediction for preventive health risk scoring
+- Health recommendation system with personalized action plans
+- Appointment reminders for doctor visits, screenings, vaccines, and follow-ups
 
 ## Environment variables
 
