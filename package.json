@@ -1,0 +1,14 @@
+{
+  "name": "smart-preventive-healthcare-system",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Manual data entry, AI prediction, health recommendations, and appointment reminders for preventive healthcare.",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "check": "node --check app.js && node --check api/coach.js && node --check server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
