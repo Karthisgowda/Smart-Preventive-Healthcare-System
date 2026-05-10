@@ -62,37 +62,38 @@
           <div class="form-grid">
             <label>
               Age
-              <input name="age" type="number" min="1" max="110" value="24" required />
+              <input name="age" type="number" min="1" max="110" placeholder="Enter age" required />
             </label>
             <label>
               Height (cm)
-              <input name="height" type="number" min="80" max="230" value="170" required />
+              <input name="height" type="number" min="80" max="230" placeholder="Enter height" required />
             </label>
             <label>
               Weight (kg)
-              <input name="weight" type="number" min="20" max="250" value="68" required />
+              <input name="weight" type="number" min="20" max="250" placeholder="Enter weight" required />
             </label>
             <label>
               Systolic BP
-              <input name="systolic" type="number" min="70" max="240" value="118" required />
+              <input name="systolic" type="number" min="70" max="240" placeholder="Enter BP" required />
             </label>
             <label>
               Fasting glucose
-              <input name="glucose" type="number" min="50" max="350" value="92" required />
+              <input name="glucose" type="number" min="50" max="350" placeholder="Enter glucose" required />
             </label>
             <label>
               Sleep hours
-              <input name="sleep" type="number" min="0" max="16" step="0.5" value="7" required />
+              <input name="sleep" type="number" min="0" max="16" step="0.5" placeholder="Enter sleep hours" required />
             </label>
             <label>
               Exercise minutes / week
-              <input name="exercise" type="number" min="0" max="1200" value="120" required />
+              <input name="exercise" type="number" min="0" max="1200" placeholder="Enter minutes" required />
             </label>
             <label>
               Stress level
               <select name="stress">
+                <option value="" selected disabled>Select stress level</option>
                 <option value="low">Low</option>
-                <option value="medium" selected>Medium</option>
+                <option value="medium">Medium</option>
                 <option value="high">High</option>
               </select>
             </label>

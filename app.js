@@ -143,6 +143,22 @@ function getFormData() {
   };
 }
 
+function hasCompletedAssessment() {
+  return form.checkValidity();
+}
+
+function showWaitingState() {
+  scoreValue.textContent = "--";
+  scoreRing.style.background = "conic-gradient(var(--line) 360deg, var(--line) 0deg)";
+  riskLevel.textContent = "Waiting for manual data entry";
+  riskSummary.textContent = "Enter patient health data and click Run AI prediction to see recommendations.";
+  heroScore.textContent = "--";
+  heroMessage.textContent = "Enter data to unlock AI prediction.";
+  metricRisk.textContent = "0";
+  metricHabits.textContent = "0";
+  recommendationList.innerHTML = "";
+}
+
 function renderPlan(plan) {
   const degrees = Math.round((plan.score / 100) * 360);
   scoreValue.textContent = plan.score;
@@ -257,7 +273,10 @@ document.querySelectorAll("[data-symptom]").forEach((button) => {
 
 downloadPlan.addEventListener("click", () => {
   const plan = load(STORAGE_KEYS.plan, null);
-  if (!plan) return;
+  if (!plan) {
+    alert("Please enter health data and run AI prediction first.");
+    return;
+  }
 
   const checklist = [
     "Smart Preventive Healthcare System Checklist",
@@ -285,6 +304,11 @@ themeToggle.addEventListener("click", () => {
 
 document.querySelectorAll("[data-prompt]").forEach((button) => {
   button.addEventListener("click", () => {
+    if (!hasCompletedAssessment()) {
+      form.reportValidity();
+      coachOutput.textContent = "Please enter patient health data first, then run AI recommendations.";
+      return;
+    }
     coachForm.elements.question.value = button.dataset.prompt;
     coachForm.requestSubmit();
   });
@@ -292,6 +316,11 @@ document.querySelectorAll("[data-prompt]").forEach((button) => {
 
 coachForm.addEventListener("submit", async (event) => {
   event.preventDefault();
+  if (!hasCompletedAssessment()) {
+    form.reportValidity();
+    coachOutput.textContent = "Please enter patient health data first, then ask for AI recommendations.";
+    return;
+  }
   const question = new FormData(coachForm).get("question").trim();
   const profile = getFormData();
   const plan = calculateRisk(profile);
@@ -324,11 +353,7 @@ if (load(STORAGE_KEYS.theme, "light") === "dark") {
   document.body.classList.add("dark");
 }
 
-const savedPlan = load(STORAGE_KEYS.plan, null);
-if (savedPlan) {
-  renderPlan(savedPlan);
-} else {
-  renderPlan(calculateRisk(getFormData()));
-}
+localStorage.removeItem(STORAGE_KEYS.plan);
+showWaitingState();
 renderRecords();
 renderReminders();
