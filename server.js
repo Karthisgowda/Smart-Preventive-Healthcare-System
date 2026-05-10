@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const coachHandler = require("./api/coach");
 
-const PORT = Number(process.env.PORT || 3000);
+const START_PORT = Number(process.env.PORT || 3000);
 const ROOT = __dirname;
 
 loadEnvFile();
@@ -81,6 +81,20 @@ const server = http.createServer((request, response) => {
   serveStatic(request, response);
 });
 
-server.listen(PORT, () => {
-  console.log(`Smart Preventive Healthcare System running at http://localhost:${PORT}`);
-});
+function listen(port, attemptsLeft = 10) {
+  server
+    .listen(port, () => {
+      console.log(`Smart Preventive Healthcare System running at http://localhost:${port}`);
+    })
+    .on("error", (error) => {
+      if (error.code === "EADDRINUSE" && attemptsLeft > 0) {
+        server.close(() => listen(port + 1, attemptsLeft - 1));
+        return;
+      }
+
+      console.error(error.message);
+      process.exit(1);
+    });
+}
+
+listen(START_PORT);
